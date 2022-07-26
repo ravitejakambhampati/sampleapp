@@ -1,0 +1,119 @@
+.head-container{
+  max-width: 500px;
+  max-height: 500px;
+  margin: auto;
+  background: skyblue;
+  padding: 50px;
+  height: 100%;
+}
+
+.add-button{
+    margin-left: 20px;
+    background-color: blueviolet;
+  color: white;
+  padding: 2px 2px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.heading{
+  font-size: 60px;
+  font-weight: 600;
+  color: blueviolet;
+  background-clip: text;
+}
+
+.unorderedlists{
+  color:black;
+  font-size: 20px;
+  list-style: none;
+}
+
+.tabs{
+  margin-left: 20px;
+  background-color: blueviolet;
+  color: white;
+  padding: 2px 2px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.editbutton{
+  margin-left: 20px;
+  background-color: black;
+  color: white;
+  padding: 2px 2px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.deletebutton{
+  margin-left: 20px;
+  background-color: red;
+  color: white;
+  padding: 2px 2px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.formdata{
+  height: 25px;
+  width: 400px;
+  align-self: center;
+  border-radius: 5px;
+}
+
+.savebutton{
+  margin-left: 20px;
+  background-color: green;
+  border-color: violet;
+  color: white;
+  height: 30px;
+  width: 60px;
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+.cancelbutton{
+  margin-left: 20px;
+  background-color: red;
+  border-color: violet;
+  color: white;
+  height: 30px;
+  width: 60px;
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+/* @media only screen and (max-width: 500px) {
+  .head-container{
+    text-align: center;
+    float: none;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .head-container{
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+} */
+
+.app{
+ margin:auto;
+ max-width: 500px;
+  max-height: 500px;
+}
