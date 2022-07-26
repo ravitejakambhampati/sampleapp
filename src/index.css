@@ -17,6 +17,7 @@
   font-size: 16px;
   border-radius: 5px;
 }
+.add-button:hover{background-color: #3e8e41}
 
 .heading{
   font-size: 60px;
@@ -40,6 +41,9 @@
   display: inline-block;
   font-size: 16px;
   border-radius: 5px;
+}
+.tabs:focus{
+  background-color: green;
 }
 
 .editbutton{
@@ -117,3 +121,5 @@
  max-width: 500px;
   max-height: 500px;
 }
+
+.tabs:hover{background-color: black}
