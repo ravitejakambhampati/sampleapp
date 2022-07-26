@@ -19,6 +19,7 @@ return (
         <input
           type="text"
           className="formdata"
+          placeholder='Enter Your Task To Be Added'
           value={name}
           autoComplete="off"
           onChange={handleChange}

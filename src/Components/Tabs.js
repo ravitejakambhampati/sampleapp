@@ -1,8 +1,7 @@
-import React, { useState }from 'react';
+import React from 'react';
 /* eslint-disable */
 
 function Tabs({onAllListClick,onCompletedListClick,onActiveListClick}) {
-  const [filterStatus,setFilterStatus] = useState(false);
   return (
     <>
     <button 

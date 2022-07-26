@@ -8,15 +8,18 @@ import HeadComponent from "./Components/HeadComponent";
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable */
 
+const ALL = "ALL"
+const ACTIVE = "ACTIVE"
+const COMPLETED = "COMPLETED"
+
 function App(props) {
   const [tasks, setTasks] = useState(props.tasks);
-  const [filteredItems, setFilteredItems] = useState(props.tasks);
+  const [activeTab,setActiveTab] = useState(ALL);
 {
   useEffect(() => {
     const listFrom = JSON.parse(localStorage.getItem("name"));
     if (listFrom?.length > 0) {
       setTasks(listFrom);
-      setFilteredItems(listFrom);
     }
   }, []);
   useEffect(() => {
@@ -24,7 +27,30 @@ function App(props) {
   }, [tasks]);
 }
 
-  const taskList = filteredItems
+const getFilteredTasks = () => {
+  if (activeTab === ALL ){
+    return tasks;
+  }
+  else if(activeTab === COMPLETED){
+    const updatedTasks = tasks.filter((task) => {
+      return task.completed === true;
+    });
+    return updatedTasks;
+  }
+  else if(activeTab === ACTIVE){
+    const activeTasks = tasks.filter((task) => {
+      return task.completed === false;
+    });
+    return activeTasks;
+  }
+    
+  
+  return tasks
+}
+
+
+
+  const taskList = getFilteredTasks()
   .map(task => (
     <Todo 
     id={task.id} 
@@ -38,10 +64,9 @@ function App(props) {
   ));
 
   function addTask(name) {
-    const newTask = { id: "todo"+ nanoid(), name: name, completed: false };
+    const newTask = { id: "todo"+ nanoid(), name : name, completed: false };
     const newTasks = [...tasks, newTask];
     setTasks(newTasks);
-    setFilteredItems(newTasks);
   }
 
   function toggleTaskCompleted(id) {
@@ -54,11 +79,11 @@ function App(props) {
       return task;
     });
     setTasks(updatedTasks);
-    setFilteredItems(updatedTasks);
   }
 
   function deleteTask(id) {
     const remainingTasks = tasks.filter((task) => id !== task.id);
+    console.log(id,remainingTasks)
     setTasks(remainingTasks);
   }
 
@@ -75,21 +100,16 @@ function App(props) {
 
   //ALL TASKS......
   const handleAllListClick = () => {
-    setFilteredItems(tasks);
+    setActiveTab(ALL);
   };
   // COMPLETED TASKS.....
   const handleCompletedListClick = () => {
-    const updatedTasks = tasks.filter((task) => {
-      return task.completed === true;
-    });
-    setFilteredItems(updatedTasks);
+    setActiveTab(COMPLETED);
   };
   //ALL ACTIVE TASKS....
   const handleActiveListClick = () => {
-    const activeTasks = tasks.filter((task) => {
-      return task.completed === false;
-    });
-    setFilteredItems(activeTasks);
+    
+    setActiveTab(ACTIVE);
   };
   
    
