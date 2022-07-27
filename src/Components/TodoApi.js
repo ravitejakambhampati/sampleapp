@@ -17,7 +17,8 @@ function createTodo({ name }) {
   const id = nanoid();
   const todoItem = { id, name, completed: false };
   const prevTodoItems = JSON.parse(localStorage.getItem(TODO_KEY)) || [];
-  const newTodoList = [todoItem, ...prevTodoItems];
+//   const newTodoList = [todoItem, ...prevTodoItems];
+  const newTodoList = [...prevTodoItems,todoItem];
   localStorage.setItem(TODO_KEY, JSON.stringify(newTodoList));
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -52,7 +53,7 @@ function updateTodo({ id, completed, name }) {
   const todoItem = { id, name, completed };
   todoList[indexToBeUpdated] = todoItem;
   localStorage.setItem(TODO_KEY, JSON.stringify(todoList));
-  console.log({ data: { todoList } });
+//   console.log({ data: { todoList } });
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({ data: { todoList } });
