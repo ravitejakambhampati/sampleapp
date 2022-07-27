@@ -3,8 +3,9 @@ import React, { useState , useEffect} from "react";
 import InputForm from "./Components/InputForm";
 import Tabs from "./Components/Tabs";
 import Todo from "./Components/Todo";
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
 import HeadComponent from "./Components/HeadComponent";
+import TodoApi from "./Components/TodoApi";
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable */
 
@@ -17,13 +18,13 @@ function App(props) {
   const [activeTab,setActiveTab] = useState(ALL);
 {
   useEffect(() => {
-    const listFrom = JSON.parse(localStorage.getItem("name"));
+    const listFrom = JSON.parse(localStorage.getItem("TodoApi"));
     if (listFrom?.length > 0) {
       setTasks(listFrom);
     }
   }, []);
   useEffect(() => {
-    localStorage.setItem("name", JSON.stringify(tasks));
+    localStorage.setItem("TodoApi", JSON.stringify(tasks));
   }, [tasks]);
 }
 
@@ -31,17 +32,17 @@ const getFilteredTasks = () => {
   if (activeTab === ALL ){
     return tasks;
   }
-  else if(activeTab === COMPLETED){
-    const updatedTasks = tasks.filter((task) => {
-      return task.completed === true;
-    });
-    return updatedTasks;
-  }
   else if(activeTab === ACTIVE){
     const activeTasks = tasks.filter((task) => {
       return task.completed === false;
     });
     return activeTasks;
+  }
+  else if(activeTab === COMPLETED){
+    const updatedTasks = tasks.filter((task) => {
+      return task.completed === true;
+    });
+    return updatedTasks;
   }
     
   
@@ -63,10 +64,12 @@ const getFilteredTasks = () => {
     />
   ));
 
-  function addTask(name) {
-    const newTask = { id: "todo"+ nanoid(), name : name, completed: false };
-    const newTasks = [...tasks, newTask];
-    setTasks(newTasks);
+  async function addTask(name) {
+    // const newTask = { id: "todo"+ nanoid(), title : name, completed: false };
+    // const newTasks = [...tasks, newTask];
+    // setTasks(newTasks);
+    const apiAddTodoData = await TodoApi.createTodo({ name: name });
+    setTasks(apiAddTodoData.data.todoList);
   }
 
   function toggleTaskCompleted(id) {
@@ -81,35 +84,41 @@ const getFilteredTasks = () => {
     setTasks(updatedTasks);
   }
 
-  function deleteTask(id) {
-    const remainingTasks = tasks.filter((task) => id !== task.id);
-    console.log(id,remainingTasks)
-    setTasks(remainingTasks);
+  async function deleteTask(id) {
+    // const remainingTasks = tasks.filter((task) => id !== task.id);
+    // console.log(id,remainingTasks)
+    // setTasks(remainingTasks);
+    const apiDeleteTodoData = await TodoApi.deleteTodo({ id });
+    setTasks(apiDeleteTodoData.data.todoList);
   }
 
-  function editTask(id, newName) {
-    const editedTaskList = tasks.map((task) => {
+  async function editTask(id,name,completed) {
+    // const editedTaskList = tasks.map((task) => {
 
-      if (id === task.id) {
-        return {...task, name: newName};
-      }
-      return task;
-    });
-    setTasks(editedTaskList);
+    //   if (id === task.id) {
+    //     return {...task, name: newName};
+    //   }
+    //   return task;
+    // });
+    // setTasks(editedTaskList);
+    const apiUpdateTodoData = await TodoApi.updateTodo({ id,name,completed });
+    setTasks(apiUpdateTodoData.data.todoList);
   }
 
   //ALL TASKS......
   const handleAllListClick = () => {
     setActiveTab(ALL);
   };
-  // COMPLETED TASKS.....
-  const handleCompletedListClick = () => {
-    setActiveTab(COMPLETED);
-  };
-  //ALL ACTIVE TASKS....
+  
+  // ACTIVE TASKS....
   const handleActiveListClick = () => {
     
     setActiveTab(ACTIVE);
+  };
+
+  // COMPLETED TASKS.....
+  const handleCompletedListClick = () => {
+    setActiveTab(COMPLETED);
   };
   
    
