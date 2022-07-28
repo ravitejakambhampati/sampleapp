@@ -3,7 +3,6 @@ import React, { useState , useEffect} from "react";
 import InputForm from "./Components/InputForm";
 import Tabs from "./Components/Tabs";
 import Todo from "./Components/Todo";
-// import { nanoid } from "nanoid";
 import HeadComponent from "./Components/HeadComponent";
 import TodoApi from "./Components/TodoApi";
 /* eslint-disable jsx-a11y/no-redundant-roles */
@@ -16,17 +15,17 @@ const COMPLETED = "COMPLETED"
 function App(props) {
   const [tasks, setTasks] = useState(props.tasks);
   const [activeTab,setActiveTab] = useState(ALL);
-{
+
   useEffect(() => {
-    const listFrom = JSON.parse(localStorage.getItem("TodoApi"));
-    if (listFrom?.length > 0) {
-      setTasks(listFrom);
+    async function getList(){
+      const apiTodoData = await TodoApi.getTodos();
+    setTasks(apiTodoData.data.todoList);
     }
+
+    getList()
+    
+    
   }, []);
-  useEffect(() => {
-    localStorage.setItem("TodoApi", JSON.stringify(tasks));
-  }, [tasks]);
-}
 
 const getFilteredTasks = () => {
   if (activeTab === ALL ){
@@ -65,14 +64,11 @@ const getFilteredTasks = () => {
   ));
 
   async function addTask(name) {
-    // const newTask = { id: "todo"+ nanoid(), title : name, completed: false };
-    // const newTasks = [...tasks, newTask];
-    // setTasks(newTasks);
     const apiAddTodoData = await TodoApi.createTodo({ name: name });
     setTasks(apiAddTodoData.data.todoList);
   }
 
-  function toggleTaskCompleted(id) {
+  async function toggleTaskCompleted(id) {
     const updatedTasks = tasks.map((task) => {
 
       if (id === task.id) {
@@ -85,22 +81,11 @@ const getFilteredTasks = () => {
   }
 
   async function deleteTask(id) {
-    // const remainingTasks = tasks.filter((task) => id !== task.id);
-    // console.log(id,remainingTasks)
-    // setTasks(remainingTasks);
     const apiDeleteTodoData = await TodoApi.deleteTodo({ id });
     setTasks(apiDeleteTodoData.data.todoList);
   }
 
   async function editTask(id,name,completed) {
-    // const editedTaskList = tasks.map((task) => {
-
-    //   if (id === task.id) {
-    //     return {...task, name: newName};
-    //   }
-    //   return task;
-    // });
-    // setTasks(editedTaskList);
     const apiUpdateTodoData = await TodoApi.updateTodo({ id,name,completed });
     setTasks(apiUpdateTodoData.data.todoList);
   }
@@ -130,7 +115,8 @@ return (
       <div>
         <Tabs onAllListClick={handleAllListClick}
           onCompletedListClick={handleCompletedListClick}
-          onActiveListClick={handleActiveListClick} />
+          onActiveListClick={handleActiveListClick} 
+          activeTab = {activeTab}/>
       </div>
       <div>
       <ul

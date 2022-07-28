@@ -42,7 +42,8 @@
   font-size: 16px;
   border-radius: 5px;
 }
-.tabs:focus{
+
+.activeTab{
   background-color: green;
 }
 
