@@ -17,7 +17,7 @@ function createTodo({ name }) {
   const id = nanoid();
   const todoItem = { id, name, completed: false };
   const prevTodoItems = JSON.parse(localStorage.getItem(TODO_KEY)) || [];
-  const newTodoList = [...prevTodoItems,todoItem];
+  const newTodoList = [...prevTodoItems, todoItem];
   localStorage.setItem(TODO_KEY, JSON.stringify(newTodoList));
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -40,7 +40,12 @@ function deleteTodo({ id }) {
   });
 }
 
-function updateTodo({ id, completed, name }) {
+function updateTodo({ id, name, completed }) {
+  if (!id) throw new Error("Id not Provided");
+  if (typeof completed !== "boolean")
+    throw new Error("Invalid Status Provided");
+  if (!name) throw new Error("Empty Title Provided");
+
   const todoList = JSON.parse(localStorage.getItem(TODO_KEY)) || [];
   const indexToBeUpdated = todoList.findIndex((item) => item.id === id);
   if (indexToBeUpdated === -1) throw new Error("Id does not exist");
@@ -54,4 +59,9 @@ function updateTodo({ id, completed, name }) {
   });
 }
 
-export default { getTodos, createTodo, deleteTodo, updateTodo };
+export default {
+  getTodos,
+  createTodo,
+  deleteTodo,
+  updateTodo,
+};

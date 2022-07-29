@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 
-
-export default function Todo(props) {
+export default function Todo({
+  editTask,
+  id,
+  completed,
+  toggleTaskCompleted,
+  name,
+  deleteTask,
+}) {
   const [isEditing, setEditing] = useState(false);
-  const [newName, setNewName] = useState('');
+  const [newName, setNewName] = useState("");
 
   function handleChange(e) {
     setNewName(e.target.value);
@@ -11,27 +17,25 @@ export default function Todo(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.editTask(props.id, newName);
+    editTask(id, newName, completed);
     setNewName("");
     setEditing(false);
   }
-  
-  
+
   const editingTemplate = (
-    <form  onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div>
-        <input 
-          id={props.id}
-          type="text" 
-          value={newName}
-          onChange={handleChange}
-          />
+        <input id={id} type="text" value={newName} onChange={handleChange} />
       </div>
       <div>
-        <button type="button" className="cancelbutton" onClick={() => setEditing(false)}>
+        <button
+          type="button"
+          className="cancelbutton"
+          onClick={() => setEditing(false)}
+        >
           Cancel
         </button>
-        <button type="submit"className="savebutton" >
+        <button type="submit" className="savebutton">
           Save
         </button>
       </div>
@@ -40,33 +44,32 @@ export default function Todo(props) {
   const viewTemplate = (
     <div>
       <div>
-          <input
-            id={props.id}
-            type="checkbox"
-            defaultChecked={props.completed}
-            onChange={() => props.toggleTaskCompleted(props.id)}
-          />
-          <label htmlFor={props.id}>
-            {props.name}
-          </label>
-        </div>
-        <div>
-          <button type="button" className="editbutton" onClick={() => setEditing(true)}>
-            Edit 
-          </button>
-          <button
-            type="button"
-            className="deletebutton"
-            onClick={() => props.deleteTask(props.id)}
-          >
-            Delete 
-          </button>
-        </div>
+        <input
+          id={id}
+          type="checkbox"
+          defaultChecked={completed}
+          onChange={() => toggleTaskCompleted(id, name, !completed)}
+        />
+        <label htmlFor={id}>{name}</label>
+      </div>
+      <div>
+        <button
+          type="button"
+          className="editbutton"
+          onClick={() => setEditing(true)}
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          className="deletebutton"
+          onClick={() => deleteTask(id)}
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
-  
-    return (
-      <li className="todo">{isEditing ? editingTemplate : viewTemplate}</li>
-    );
-  }
-  
+
+  return <li className="todo">{isEditing ? editingTemplate : viewTemplate}</li>;
+}

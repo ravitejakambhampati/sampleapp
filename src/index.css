@@ -1,4 +1,4 @@
-.head-container{
+.head-container {
   max-width: 500px;
   max-height: 500px;
   margin: auto;
@@ -7,9 +7,9 @@
   height: 100%;
 }
 
-.add-button{
-    margin-left: 20px;
-    background-color: blueviolet;
+.add-button {
+  margin-left: 20px;
+  background-color: blueviolet;
   color: white;
   padding: 2px 2px;
   text-align: center;
@@ -17,22 +17,24 @@
   font-size: 16px;
   border-radius: 5px;
 }
-.add-button:hover{background-color: #3e8e41}
+.add-button:hover {
+  background-color: #3e8e41;
+}
 
-.heading{
+.heading {
   font-size: 60px;
   font-weight: 600;
   color: blueviolet;
   background-clip: text;
 }
 
-.unorderedlists{
-  color:black;
+.unorderedlists {
+  color: black;
   font-size: 20px;
   list-style: none;
 }
 
-.tabs{
+.tabs {
   margin-left: 20px;
   background-color: blueviolet;
   color: white;
@@ -43,11 +45,11 @@
   border-radius: 5px;
 }
 
-.activeTab{
+.activeTab {
   background-color: green;
 }
 
-.editbutton{
+.editbutton {
   margin-left: 20px;
   background-color: black;
   color: white;
@@ -58,7 +60,7 @@
   border-radius: 5px;
 }
 
-.deletebutton{
+.deletebutton {
   margin-left: 20px;
   background-color: red;
   color: white;
@@ -69,14 +71,14 @@
   border-radius: 5px;
 }
 
-.formdata{
+.formdata {
   height: 25px;
   width: 400px;
   align-self: center;
   border-radius: 5px;
 }
 
-.savebutton{
+.savebutton {
   margin-left: 20px;
   background-color: green;
   border-color: violet;
@@ -89,7 +91,7 @@
   border-radius: 5px;
 }
 
-.cancelbutton{
+.cancelbutton {
   margin-left: 20px;
   background-color: red;
   border-color: violet;
@@ -117,10 +119,12 @@
   }
 } */
 
-.app{
- margin:auto;
- max-width: 500px;
+.app {
+  margin: auto;
+  max-width: 500px;
   max-height: 500px;
 }
 
-.tabs:hover{background-color: green}
+.tabs:hover {
+  background-color: green;
+}

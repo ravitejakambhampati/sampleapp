@@ -1,5 +1,5 @@
 /* eslint-disable no-lone-blocks */
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import InputForm from "./Components/InputForm";
 import Tabs from "./Components/Tabs";
 import Todo from "./Components/Todo";
@@ -8,58 +8,50 @@ import TodoApi from "./Components/TodoApi";
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable */
 
-const ALL = "ALL"
-const ACTIVE = "ACTIVE"
-const COMPLETED = "COMPLETED"
+const ALL = "ALL";
+const ACTIVE = "ACTIVE";
+const COMPLETED = "COMPLETED";
 
 function App(props) {
   const [tasks, setTasks] = useState(props.tasks);
-  const [activeTab,setActiveTab] = useState(ALL);
+  const [activeTab, setActiveTab] = useState(ALL);
 
   useEffect(() => {
-    async function getList(){
+    async function getList() {
       const apiTodoData = await TodoApi.getTodos();
-    setTasks(apiTodoData.data.todoList);
+      setTasks(apiTodoData.data.todoList);
     }
 
-    getList()
-    
-    
+    getList();
   }, []);
 
-const getFilteredTasks = () => {
-  if (activeTab === ALL ){
+  const getFilteredTasks = () => {
+    if (activeTab === ALL) {
+      return tasks;
+    } else if (activeTab === ACTIVE) {
+      const activeTasks = tasks.filter((task) => {
+        return task.completed === false;
+      });
+      return activeTasks;
+    } else if (activeTab === COMPLETED) {
+      const updatedTasks = tasks.filter((task) => {
+        return task.completed === true;
+      });
+      return updatedTasks;
+    }
+
     return tasks;
-  }
-  else if(activeTab === ACTIVE){
-    const activeTasks = tasks.filter((task) => {
-      return task.completed === false;
-    });
-    return activeTasks;
-  }
-  else if(activeTab === COMPLETED){
-    const updatedTasks = tasks.filter((task) => {
-      return task.completed === true;
-    });
-    return updatedTasks;
-  }
-    
-  
-  return tasks
-}
+  };
 
-
-
-  const taskList = getFilteredTasks()
-  .map(task => (
-    <Todo 
-    id={task.id} 
-    name={task.name} 
-    completed={task.completed}
-    key={task.id}
-    toggleTaskCompleted={toggleTaskCompleted}
-    deleteTask={deleteTask}
-    editTask={editTask}
+  const taskList = getFilteredTasks().map((task) => (
+    <Todo
+      id={task.id}
+      name={task.name}
+      completed={task.completed}
+      key={task.id}
+      toggleTaskCompleted={toggleTaskCompleted}
+      deleteTask={deleteTask}
+      editTask={editTask}
     />
   ));
 
@@ -68,16 +60,17 @@ const getFilteredTasks = () => {
     setTasks(apiAddTodoData.data.todoList);
   }
 
-  async function toggleTaskCompleted(id) {
-    const updatedTasks = tasks.map((task) => {
-
-      if (id === task.id) {
-        
-        return {...task, completed: !task.completed};
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
+  async function toggleTaskCompleted(id, name, completed) {
+    const updateTodoData = await TodoApi.updateTodo({ id, name, completed });
+    setTasks(updateTodoData.data.todoList);
+    console.log(id, name, completed);
+    // const updatedTasks = tasks.map((task) => {
+    //   if (id === task.id) {
+    //     return { ...task, completed: !task.completed };
+    //   }
+    //   return task;
+    // });
+    // setTasks(updatedTasks);
   }
 
   async function deleteTask(id) {
@@ -85,8 +78,8 @@ const getFilteredTasks = () => {
     setTasks(apiDeleteTodoData.data.todoList);
   }
 
-  async function editTask(id,name,completed) {
-    const apiUpdateTodoData = await TodoApi.updateTodo({ id,name,completed });
+  async function editTask(id, name, completed) {
+    const apiUpdateTodoData = await TodoApi.updateTodo({ id, name, completed });
     setTasks(apiUpdateTodoData.data.todoList);
   }
 
@@ -94,10 +87,9 @@ const getFilteredTasks = () => {
   const handleAllListClick = () => {
     setActiveTab(ALL);
   };
-  
+
   // ACTIVE TASKS....
   const handleActiveListClick = () => {
-    
     setActiveTab(ACTIVE);
   };
 
@@ -105,30 +97,27 @@ const getFilteredTasks = () => {
   const handleCompletedListClick = () => {
     setActiveTab(COMPLETED);
   };
-  
-   
-return (
+
+  return (
     <div className="app">
-      <HeadComponent/>
-      <InputForm task={taskList} handleAddButtonClick={addTask}/>
-      <br/>
+      <HeadComponent />
+      <InputForm task={taskList} handleAddButtonClick={addTask} />
+      <br />
       <div>
-        <Tabs onAllListClick={handleAllListClick}
+        <Tabs
+          onAllListClick={handleAllListClick}
           onCompletedListClick={handleCompletedListClick}
-          onActiveListClick={handleActiveListClick} 
-          activeTab = {activeTab}/>
+          onActiveListClick={handleActiveListClick}
+          activeTab={activeTab}
+        />
       </div>
       <div>
-      <ul
-        role="list"
-        className="unorderedlists"
-      >
-       {taskList}
-       </ul>
+        <ul role="list" className="unorderedlists">
+          {taskList}
+        </ul>
       </div>
     </div>
   );
 }
-
 
 export default App;
