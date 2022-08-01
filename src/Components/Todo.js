@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import PropTypes from "prop-types";
 export default function Todo({
   editTask,
   id,
@@ -73,3 +73,12 @@ export default function Todo({
 
   return <li className="todo">{isEditing ? editingTemplate : viewTemplate}</li>;
 }
+
+Todo.propTypes = {
+  editTask: PropTypes.func,
+  id: PropTypes.string,
+  completed: PropTypes.bool,
+  toggleTaskCompleted: PropTypes.func,
+  name: PropTypes.string,
+  deleteTask: PropTypes.func,
+};

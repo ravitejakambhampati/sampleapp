@@ -63,14 +63,6 @@ function App(props) {
   async function toggleTaskCompleted(id, name, completed) {
     const updateTodoData = await TodoApi.updateTodo({ id, name, completed });
     setTasks(updateTodoData.data.todoList);
-    console.log(id, name, completed);
-    // const updatedTasks = tasks.map((task) => {
-    //   if (id === task.id) {
-    //     return { ...task, completed: !task.completed };
-    //   }
-    //   return task;
-    // });
-    // setTasks(updatedTasks);
   }
 
   async function deleteTask(id) {

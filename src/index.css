@@ -104,21 +104,6 @@
   border-radius: 5px;
 }
 
-/* @media only screen and (max-width: 500px) {
-  .head-container{
-    text-align: center;
-    float: none;
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  .head-container{
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-} */
-
 .app {
   margin: auto;
   max-width: 500px;
@@ -127,4 +112,15 @@
 
 .tabs:hover {
   background-color: green;
+}
+
+@media screen and (min-width: 480px) {
+  .app {
+    width: auto;
+    float: middle;
+  }
+  .heading {
+    width: auto;
+    float: middle;
+  }
 }
