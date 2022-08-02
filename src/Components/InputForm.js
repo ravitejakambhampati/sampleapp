@@ -1,4 +1,21 @@
 import React, { useState } from "react";
+// import { connect } from "react-redux";
+// import { createTodo, deleteTodo } from "../redux/todoReducer";
+// import { updateTodo } from "../redux/todoReducer";
+
+// const mapStateToProps = (state) => {
+//   return {
+//     todos: state,
+//   };
+// };
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     addTodo: (name) => dispatch(createTodo(name)),
+//     removeTodo: (id) => dispatch(deleteTodo(id)),
+//     updateTodo: (id, name, completed) =>
+//       dispatch(updateTodo(id, name, completed)),
+//   };
+// };
 
 function InputForm({ handleAddButtonClick }) {
   const [name, setName] = useState("");
