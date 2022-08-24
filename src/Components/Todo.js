@@ -51,7 +51,7 @@ export default function Todo({
           defaultChecked={completed}
           onChange={() => toggleTaskCompleted(id, name, !completed)}
         />
-        <label htmlFor={id}>{name}</label>
+        <label>{name}</label>
       </div>
       <div>
         <button

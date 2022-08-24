@@ -6,7 +6,13 @@ import Todo from "./Components/Todo";
 import HeadComponent from "./Components/HeadComponent";
 import TodoApi from "./Components/TodoApi";
 import { useSelector, useDispatch } from "react-redux";
-import { updateTodoList } from "./redux/todoReducer";
+import {
+  addTodo,
+  deleteTodo,
+  getTodo,
+  updateTodo,
+  updateTodoList,
+} from "./redux/todoReducer";
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable */
 
@@ -20,13 +26,15 @@ function App(props) {
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   useEffect(() => {
-    async function getList() {
-      const apiTodoData = await TodoApi.getTodos();
-      // setTasks(apiTodoData.data.todoList);
-      dispatch(updateTodoList(apiTodoData.data.todoList));
-    }
+    // async function getList() {
+    //   const apiTodoData = await TodoApi.getTodos();
+    //   // setTasks(apiTodoData.data.todoList);
+    //   // console.log(apiTodoData.data.todoList);
+    //   dispatch(updateTodoList(apiTodoData.data.todoList));
+    // }
 
-    getList();
+    // getList();
+    dispatch(getTodo());
   }, []);
 
   const getFilteredTasks = () => {
@@ -60,9 +68,9 @@ function App(props) {
   ));
 
   async function addTask(name) {
-    const apiAddTodoData = await TodoApi.createTodo({ name: name });
+    // const apiAddTodoData = await TodoApi.createTodo({ name: name });
     // setTasks(apiAddTodoData.data.todoList);
-    dispatch(updateTodoList(apiAddTodoData.data.todoList));
+    dispatch(addTodo({ name }));
   }
 
   async function toggleTaskCompleted(id, name, completed) {
@@ -72,15 +80,15 @@ function App(props) {
   }
 
   async function deleteTask(id) {
-    const apiDeleteTodoData = await TodoApi.deleteTodo({ id });
+    // const apiDeleteTodoData = await TodoApi.deleteTodo({ id });
     // setTasks(apiDeleteTodoData.data.todoList);
-    dispatch(updateTodoList(apiDeleteTodoData.data.todoList));
+    dispatch(deleteTodo({ id }));
   }
 
   async function editTask(id, name, completed) {
-    const apiUpdateTodoData = await TodoApi.updateTodo({ id, name, completed });
+    // const apiUpdateTodoData = await TodoApi.updateTodo({ id, name, completed });
     // setTasks(apiUpdateTodoData.data.todoList);
-    dispatch(updateTodoList(apiUpdateTodoData.data.todoList));
+    dispatch(updateTodo({ id, name, completed }));
   }
 
   //ALL TASKS......
